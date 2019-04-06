@@ -18,18 +18,18 @@ public class Game {
     public static void main(String[] args) {
         
         Scanner myScanner = new Scanner(System.in);
-        int wins = 0;
-        int losses = 0;
-        Boolean playing;
+        int wins = 0;                                                               //Variable to store wins
+        int losses = 0;                                                             //Variable to store losses
+        Boolean playing;                                                            //Is the user still playingÉ
         
         do
         {
-            Boolean win = play();
+            Boolean win = play();                                                   //Our main play method returns if the player won or not
             
             if (win)
-                wins++;
+                wins++;                                                             //Player won!
             else
-                losses++;
+                losses++;                                                           //Bad guys won :(
             
             System.out.println("================================================");
             System.out.println("The score is You: "+wins+" The Computer: "+losses);
@@ -37,7 +37,7 @@ public class Game {
             System.out.println("Would you like to play again? (y/n)");
             String answer = myScanner.nextLine();
 
-            switch(answer.toUpperCase()){
+            switch(answer.toUpperCase()){                                           //Switch for the players response
                 case "Y":
                     playing = true;
                     System.out.println("1");
@@ -53,18 +53,18 @@ public class Game {
             
         }while (playing);
         
-        System.out.println("Thanks for playing!");
+        System.out.println("Thanks for playing!");                                  //A polite goodbye. +5 marks
             
     }
     
     /**
      * This just checks if someone made a book, to keep all the user interaction in one place
      */
-    private static void reportBook(GoFishPlayer p)
+    private static void reportBook(GoFishPlayer p)                                          //Some runtime polymorphism rite hurr
     {
-        String cardValue = p.checkBook();
+        String cardValue = p.checkBook();                                                   //checkBook returns null if nothing was found, or a string of the cards values, so we call it and store its return here
         
-        if (cardValue != null)
+        if (cardValue != null)                                                              //If we took a book                 
             System.out.println(p.getName()+" scored a book of "+cardValue+"s! They currently have "+p.getBooks());
     }
     
@@ -95,12 +95,12 @@ public class Game {
             while (fishing)
             {
                 player.printHand();
-                reportBook(player); //We have to check for a book as the game starts, because it is a possibility. We do it after we print the hand so there's feedback, I guess
+                reportBook(player);                                                 //We have to check for a book as the game starts, because it is a possibility. We do it after we print the hand so there's feedback, I guess
                 
-                System.out.println("Choose a value to pick from: ");
+                System.out.println("Choose a value to pick from (Ace/Two/Three/Jack/King etc):");
                 String choice = myScanner.nextLine();
 
-                if (player.pickCard(Value.valueOf(choice),computer))
+                if (player.pickCard(Value.fromString(choice),computer))
                 {
                     reportBook(player);
                     System.out.println("Go again!");

@@ -74,32 +74,34 @@ public class GoFishPlayer extends Player {
     */
     public boolean pickCard(Value val, Player target)
     {
-        boolean picked=false;
-        int[] toRemove = new int[target.getHand().size()];
+        boolean picked=false;                                                           //Did we pick a card?
+        int[] toRemove = new int[target.getHand().size()];                              //Create an array copy of the targets hand to store the location of any matches.
 
-        for (int i=0; i<toRemove.length;i++)
+        for (int i=0; i<toRemove.length;i++)                                            //init the array
             toRemove[i]=-1;
 
-        for(Card a: target.getHand())
+        for(Card a: target.getHand())                                                   //For each card in the targets hand
         {
-            if (a.getValue().equals(val))
+            if (a.getValue().equals(val))                                               //If there are any cards with a matching value
             {
-                Card temp = a;
-                toRemove[target.getHand().indexOf(a)]=target.getHand().indexOf(a);
-                addCard(temp);
-                System.out.println(getName()+" took "+temp.toString());
-                picked=true;
+                Card temp = a;                                                          //Store it in a temp card
+                toRemove[target.getHand().indexOf(a)]=target.getHand().indexOf(a);      //Store the card location in the same location in our temp array
+                addCard(temp);                                                          //Add the card to our hand
+                System.out.println(getName()+" took "+temp.toString());                 //Tell the user who took what
+                picked=true;                                                            //Return true so the player can go again
             }
         }
 
-        for (int i=toRemove.length-1; i>=0;i--) //Loop backwards so we have no invalid inputs??
+        for (int i=toRemove.length-1; i>=0;i--)                                         //Loop backwards so we have no invalid indexes
         {
-            if (toRemove[i] != -1)
-                target.getHand().remove(i);
+            if (toRemove[i] != -1)                                                      //If the array has a value
+                target.getHand().remove(i);                                             //remove it
         }
 
-        return picked;
+        return picked;                                                                  //Return if we picked or not
+        
     }
-            
-    
+             
 }
+
+

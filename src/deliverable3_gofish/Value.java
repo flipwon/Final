@@ -10,17 +10,40 @@ package deliverable3_gofish;
  * @author flipp
  */
 public enum Value {
-    Ace,
-    Two,
-    Three,
-    Four,
-    Five,
-    Six,
-    Seven,
-    Eight,
-    Nine,
-    Ten,
-    Jack,
-    Queen,
-    King
+    Ace("ace"),
+    Two("two"),
+    Three("three"),
+    Four("four"),
+    Five("five"),
+    Six("six"),
+    Seven("seven"),
+    Eight("eight"),
+    Nine("nine"),
+    Ten("ten"),
+    Jack("jack"),
+    Queen("queen"),
+    King("king");
+    
+    private String myString;
+    
+    Value(String myString){
+        this.myString=myString;
+    }
+    
+    public String getMyString()
+    {
+        return this.myString;
+    }
+    
+    public static Value fromString(String myString)
+    {
+        for (Value i: Value.values())
+        {
+            if (i.myString.equalsIgnoreCase(myString))
+            {
+                return i;
+            }
+        }
+        return null;
+    }
 }
