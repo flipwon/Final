@@ -58,7 +58,7 @@ public class Game {
     }
     
     /**
-     * This is the main method to start and play the Go Fish game.
+     * This just checks if someone made a book, to keep all the user interaction in one place
      */
     private static void reportBook(GoFishPlayer p)
     {
@@ -67,6 +67,11 @@ public class Game {
         if (cardValue != null)
             System.out.println(p.getName()+" scored a book of "+cardValue+"s! They currently have "+p.getBooks());
     }
+    
+    /**
+     * This is the main method to start and play the Go Fish game. Returns if we want to play again 
+     * @return      A boolean if the player wants to play again
+     */
     private static Boolean play()
     {
         
