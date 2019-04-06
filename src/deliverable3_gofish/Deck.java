@@ -72,19 +72,12 @@ public class Deck {
         {
             for (int i = 0; i < numCards; i++)
             {
-                if (!cards.isEmpty())
-                {
-                    //store top card in a temp variable
-                    Card temp = cards.get(0);
-                    //remove the top card
-                    cards.remove(0);
-                    //add card to players hand
-                    p.addCard(temp);
-                }
-                else
-                {
-                    System.out.println("Out of cards, check for win???????????");
-                }
+                //store top card in a temp variable
+                Card temp = cards.get(0);
+                //remove the top card
+                cards.remove(0);
+                //add card to players hand
+                p.addCard(temp);
             }
         }else{
             System.out.println("Out of cards, check for win???????????");

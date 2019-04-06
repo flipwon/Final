@@ -5,14 +5,13 @@
  */
 package deliverable3_gofish;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
  * An implementation of the Computer class, extending the Player class
  * @author flipp
  */
-public class Computer extends Player{
+public class Computer extends GoFishPlayer{
     
     /**
      * Computer constructor
@@ -42,17 +41,4 @@ public class Computer extends Player{
         }
     }
     
-    /**
-     * Print the hand of the computer
-     */
-    public void printHand()
-    {
-        System.out.println("--------------------------------");
-        System.out.println("Computer Hand:");
-        for (int i = 0;i < getHand().size(); i++)
-        {
-            System.out.println(getHand().get(i).toString());
-        }
-        System.out.println("--------------------------------");
-    }
 }

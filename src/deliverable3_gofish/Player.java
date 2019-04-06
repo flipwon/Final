@@ -13,7 +13,7 @@ import java.util.Comparator;
  * Implementation of a Player
  * @author flipp
  */
-public class Player{
+public abstract class Player{
     
     private String name;
     private ArrayList<Card> hand = new ArrayList<Card>();
@@ -74,7 +74,10 @@ public class Player{
     
     //No hand setter because stuff will break
     
-    //No books setter because score shouldnt be messed with
+    public void setBooks(int b)
+    {
+        books = b;
+    }
     
     /**
      * Add a Card to the Player hand
@@ -98,92 +101,11 @@ public class Player{
             return false;     
     }
     
-    /**
-     * Check for a book (4 cards of the same value) remove the cards and add to your score.
-     */
-    public void checkBook()
-    {
-        Boolean madeBook=false;
-        
-        int[] toRemove = new int[hand.size()];
-        
-        for (int i=0; i<toRemove.length;i++)
-            toRemove[i]=-1;
-        
-        for(Card a: hand)
-        {
-            int match = 0;
-            for(Card b: hand)
-            {
-                if (a.getValue()==b.getValue())
-                {
-                    match++;       
-                }
-            }
+    
 
-            if (match == 4)
-            {
-                for(int i = 0; i < match; i++)
-                {
-                    toRemove[hand.indexOf(a)]=hand.indexOf(a);
-                }
-               
-                madeBook=true;
-            }
-        }
-        
-        for (int i=toRemove.length-1; i>=0;i--) //Loop backwards so we have no invalid inputs removing from an arraylist
-        {
-            if (toRemove[i] != -1)
-                hand.remove(i);
-        }
-        
-        if (madeBook)
-        {
-            books++;
-            System.out.println(name+" scored a book!! They currently have "+books);
-        }
-            
-    }
-    
     /**
-     * Pick a specific value from a target Player, return true if a Card of specified Value was found
-     * @param val       The Value chosen
-     * @param target    The target Player to chose from
-     * @return          True if a Card matching that value is found
-     */
-    public boolean pickCard(Value val, Player target)
-    {
-        boolean picked=false;
-        int[] toRemove = new int[target.hand.size()];
-        
-        for (int i=0; i<toRemove.length;i++)
-            toRemove[i]=-1;
-        
-        for(Card a: target.hand)
-        {
-            if (a.getValue().equals(val))
-            {
-                Card temp = a;
-                toRemove[target.hand.indexOf(a)]=target.hand.indexOf(a);
-                addCard(temp);
-                System.out.println(name+" took "+temp.toString());
-                picked=true;
-            }
-        }
-        
-        for (int i=toRemove.length-1; i>=0;i--) //Loop backwards so we have no invalid inputs??
-        {
-            if (toRemove[i] != -1)
-                target.hand.remove(i);
-        }
-        
-        checkBook();
-        return picked;
-    }
-    
-    /**
-     * Print the hand of the Player in order from lowest Value to highest Value Card
+     * Print the hand of the Player in order from lowest Value to highest Value Card. This is sort of like a fancy tostring for the players hand 
+     * but the tostring should return the player. I guess I could have made a hand class.
      */
     public void printHand()
     {
@@ -205,7 +127,7 @@ public class Player{
         
         
         System.out.println("--------------------------------");
-        System.out.println("Your hand:");
+        System.out.println(this.name+"'s hand:");
         for (int i = 0;i < hand.size(); i++)
         {
             System.out.println(hand.get(i).toString());
