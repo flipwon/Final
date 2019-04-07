@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * GoFish baby!
  */
 package deliverable3_gofish;
 
@@ -17,7 +15,8 @@ public class GoFishPlayer extends Player {
     }
     
     /**
-     * Check for a book (4 cards of the same value) remove the cards and add to your score.
+     * Check for a book (four of a kind) of cards in a hand. If found, remove the cards and score a point
+     * @return      The value of the cards removed in string form (ex: Ace)
      */
     public String checkBook()
     {
@@ -29,9 +28,9 @@ public class GoFishPlayer extends Player {
         for (int i=0; i<toRemove.length;i++)
             toRemove[i]=-1;
         
-        for(Card a: this.getHand())
-        {
-            int match = 0;
+        for(Card a: this.getHand())                                                 //For each card in our hand, we check for a matching
+        {                                                                           //value. We continue to loop through until we find a
+            int match = 0;                                                          //book of 4.
             for(Card b: this.getHand())
             {
                 if (a.getValue()==b.getValue())
@@ -40,8 +39,8 @@ public class GoFishPlayer extends Player {
                 }
             }
 
-            if (match == 4)
-            {
+            if (match == 4)                                                         //If we find 4, we store the index of those cards in
+            {                                                                       //a temp array to remove later.
                 cardValue = a.getValue().name();
                 for(int i = 0; i < match; i++)
                 {
@@ -52,7 +51,7 @@ public class GoFishPlayer extends Player {
             }
         }
         
-        for (int i=toRemove.length-1; i>=0;i--) //Loop backwards so we have no invalid inputs removing from an arraylist
+        for (int i=toRemove.length-1; i>=0;i--)                                     //Loop backwards so we have no invalid indexes removing from an arraylist
         {
             if (toRemove[i] != -1)
                 this.getHand().remove(i);
@@ -60,10 +59,10 @@ public class GoFishPlayer extends Player {
         
         if (madeBook)
         {
-            this.setBooks(this.getBooks()+1);
+            this.setBooks(this.getBooks()+1);                                       //Give a point
         }
         
-        return cardValue;
+        return cardValue;                                   
     }
         
     /**
@@ -74,30 +73,30 @@ public class GoFishPlayer extends Player {
     */
     public String pickCard(Value val, Player target)
     {
-        String picked=null;                                                           //Did we pick a card?
+        String picked=null;                                                           
         int[] toRemove = new int[target.getHand().size()];                              //Create an array copy of the targets hand to store the location of any matches.
 
-        for (int i=0; i<toRemove.length;i++)                                            //init the array
+        for (int i=0; i<toRemove.length;i++)                                            
             toRemove[i]=-1;
 
-        for(Card a: target.getHand())                                                   //For each card in the targets hand
-        {
-            if (a.getValue().equals(val))                                               //If there are any cards with a matching value
+        for(Card a: target.getHand())                                                   //For each card in the targets hand, if there are any cards
+        {                                                                               //with a matching value, store it in our temp array, and
+            if (a.getValue().equals(val))                                               //add the card and return what we took.
             {
-                Card temp = a;                                                          //Store it in a temp card
-                toRemove[target.getHand().indexOf(a)]=target.getHand().indexOf(a);      //Store the card location in the same location in our temp array
-                addCard(temp);                                                          //Add the card to our hand
-                picked=getName()+" took "+target.getName()+"'s "+temp.getValue()+"s";                              //return who took what
+                Card temp = a;                                                          
+                toRemove[target.getHand().indexOf(a)]=target.getHand().indexOf(a);      
+                addCard(temp);                                                          
+                picked=getName()+" took "+target.getName()+"'s "+temp.getValue()+"s";                              
             }
         }
 
         for (int i=toRemove.length-1; i>=0;i--)                                         //Loop backwards so we have no invalid indexes
         {
-            if (toRemove[i] != -1)                                                      //If the array has a value
-                target.getHand().remove(i);                                             //remove it
+            if (toRemove[i] != -1)
+                target.getHand().remove(i);                                             //If an index in the array holds a value, we remove it
         }
-
-        return picked;                                                                  //Return if we picked or not
+            
+        return picked;                                                                 
         
     }
              

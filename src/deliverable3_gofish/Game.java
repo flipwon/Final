@@ -1,20 +1,15 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * GoFish baby!
  */
 package deliverable3_gofish;
 
 /**
- *
- * @author flipp
+ * @author Everyone <3
  */
 import java.util.Scanner;
 
 public class Game {
-        /** 
-     * @param args the command line arguments
-     */
+     
     public static void main(String[] args) {
         
         Scanner myScanner = new Scanner(System.in);
@@ -24,6 +19,23 @@ public class Game {
         
         do
         {
+            System.out.println("================================");  
+            System.out.println("=======Welcome to GO FISH=======");
+            System.out.println("========By Travis, Mike=========");
+            System.out.println("========Mas and Jeremy==========");
+            System.out.println("================================");  
+            System.out.println("   <<Press Enter to start>>   ");
+            System.out.println("================================");
+            
+            try                                                                     //Wait for enter to start the game
+            {
+                System.in.read();
+            }
+            catch(Exception exception)
+            {
+                exception.printStackTrace();
+            }
+            
             Boolean win = play();                                                   //Our main play method returns if the player won or not
             
             if (win)
@@ -31,24 +43,21 @@ public class Game {
             else
                 losses++;                                                           //Bad guys won :(
             
-            System.out.println("================================================");
-            System.out.println("The score is You: "+wins+" The Computer: "+losses);
-            System.out.println("================================================");
-            System.out.println("Would you like to play again? (y/n)");
+            System.out.println("================================");
+            System.out.println("  Score You: "+wins+" The Computer: "+losses);
+            System.out.println("================================");
+            System.out.println("=======Play again? (Y/N)========");
             String answer = myScanner.nextLine();
 
             switch(answer.toUpperCase()){                                           //Switch for the players response
                 case "Y":
                     playing = true;
-                    System.out.println("1");
                     break;
                 case "N":
                     playing = false;
-                    System.out.println("2");
                     break;
                 default:
                     playing = false;
-                    System.out.println("3");
             }
             
         }while (playing);
@@ -57,20 +66,69 @@ public class Game {
             
     }
     
+    
     /**
-     * This just checks if someone made a book, to keep all the user interaction in one place
+     * Checks if someone made a book, to keep all the user interaction in one place
      */
     private static void reportBook(GoFishPlayer p)                                          //Some runtime polymorphism rite hurr
     {
-        String cardValue = p.checkBook();                                                   //checkBook returns null if nothing was found, or a string of the cards values, so we call it and store its return here
+        String cardValue = p.checkBook();                                                   
         
         if (cardValue != null)                                                              //If we took a book                 
             System.out.println(p.getName()+" scored a book of "+cardValue+"s! They currently have "+p.getBooks());
     }
     
+    
+    /**
+     * Check if everyone is out of cards.
+     * @param a player
+     * @param b computer
+     * @param d deck
+     * @return If everyone is out of cards
+     */
+    private static Boolean outOfCards(GoFishPlayer a, GoFishPlayer b, Deck d)
+    {
+        if (a.checkHandEmpty() && b.checkHandEmpty() && d.getCardCount() == 0)
+            return true;
+        else
+            return false;
+    }
+    
+    
+    /**
+     * Double check everyone is out of cards, get score and return the winner (true for player, false for computer)
+     * @param a player
+     * @param b computer
+     * @param d deck
+     * @return Boolean winner of game (t for player, f for comp)
+     */
+    private static Boolean checkGameOver(GoFishPlayer a, GoFishPlayer b, Deck d)
+    {
+        
+        Boolean win = null;
+        if (outOfCards(a,b,d))
+        {
+            System.out.println("GAME OVER!!");
+            System.out.println("Player has "+a.getBooks()+" Books || Computer has "+b.getBooks()+" Books!");
+
+            if (a.getBooks() > b.getBooks())
+            {
+                System.out.println("Player wins!");
+                win = true;
+            }
+            else
+            {
+                win = false;
+                System.out.println("Computer wins!");
+            }
+
+        }
+        return win;
+    }
+    
     /**
      * This is the main method to start and play the Go Fish game. Returns if we want to play again 
-     * @return      A boolean if the player wants to play again
+     * @return      The winner of the game, true for player, false for computer
      */
     private static Boolean play()
     {
@@ -81,23 +139,25 @@ public class Game {
         GoFishPlayer player = new GoFishPlayer("Player");
         Computer computer = new Computer("Computer");
         
-        Boolean game = true;
-        Boolean fishing = true;
-        Boolean win = false;
+        Boolean game = true;                                                        //Keep track of if we're still player
+        Boolean fishing = true;                                                     //True for players turn, false for computers turn
+        Boolean win = false;                                                        //True for player win, false for computer win, to be returned 
         
-        myDeck.Deal(7, player);
+        myDeck.Deal(7, player);                                                     //Deal 7 cards to both players
         myDeck.Deal(7, computer);
         
         //Our main game loop
         while (game)
-        {
+        {  
             //Our player game loop
             while (fishing)
             {
-                String[] playerHand = player.printHand();
+                if (outOfCards(player,computer,myDeck))
+                    break;
                 
+                String[] playerHand = player.printHand();                           //Store the players hand
                 
-                System.out.println("================================");
+                System.out.println("================================");                                        
                 System.out.println("  Books- Player: "+player.getBooks()+" Computer: "+computer.getBooks());
                 System.out.println("================================");
                 System.out.println("       Cards in deck: "+myDeck.getCardCount());
@@ -111,105 +171,90 @@ public class Game {
                 reportBook(player);                                                 //We have to check for a book as the game starts, because it is a possibility. We do it after we print the hand so there's feedback, I guess
                 
                 System.out.println("Choose a value to pick from (Ace/Two/Three/Jack/King etc):");
-                String choice = myScanner.nextLine();
-                String chosen = player.pickCard(Value.fromString(choice),computer);
-                if (chosen != null)
+                
+                String choice = myScanner.nextLine();                               //Store the users input for later
+                String chosen = player.pickCard(Value.fromString(choice),computer); //Store the picked card for later
+                
+                if (chosen != null)                                                 //If we guess correctly, we take the card, check for a book and quere the player to go again
                 {
-                    System.out.println(chosen);
+                    System.out.println(chosen);                                         
                     reportBook(player);
                     System.out.println("Go again!");
-                    if (player.checkHandEmpty() && myDeck.getCardCount() > 0)
+                    if (player.checkHandEmpty())                                    //If our hand is empty and the deck still has cards, deal up to 7 to the player
                     {
-                        myDeck.Deal(7, player);
+                        if (myDeck.getCardCount() == 0)
+                        {
+                            System.out.println("Deck is out of cards!");            //Else its out of cards and we swap turns
+                            fishing = false;
+                        }
                     }
-                    else if (player.checkHandEmpty() && myDeck.getCardCount() <= 0)
-                    {
-                        System.out.println("Out of cards in deck!");
-                        fishing = false;
-                    }
+                    
                 }else{
                     
-                    System.out.println("Go Fish!");
+                    System.out.println("Go Fish!");                                 //Otherwise we go fish
                     fishing = false;
-                    
                     if (myDeck.getCardCount() > 0)
                     {
                         myDeck.Deal(1, player);
                         System.out.println("You picked up a "+player.getHand().get(0).toString());
                         System.out.println("There are "+myDeck.getCardCount()+" cards left in the deck.");
-                        if (player.getHand().get(0).getValue() == Value.fromString(choice))         //If the value of the card we picked up is equal to the one we chose, fish our wish!
+                        if (player.getHand().get(0).getValue() == Value.fromString(choice))         //If the value of the card we picked up is equal to the one we chose, we get to go again!
                         {
-                            fishing = true;
                             System.out.println("You fished your wish! Go again!");
+                            fishing = true;
                         } 
                     }
-                    
                     reportBook(player);
-                    if (player.checkHandEmpty() && myDeck.getCardCount() > 0)
-                        myDeck.Deal(7, player);;
-                    
                 }
             }
             
+           
             
             //When the player isn't fishing, the computer is
             while (!fishing)
             {
+                if (outOfCards(player,computer,myDeck))
+                    break;
+                
                 System.out.println("Computer has "+computer.getHand().size()+" cards.");
-                String[] compPicked = computer.pickRandom(player);
+                
+                String[] compPicked = computer.pickRandom(player);                  //The computer picks his card randomly and returns an array of 
+                                                                                    //strings to display to the user, to keep all user interaction
+                                                                                    //in one place!
                 if (compPicked[1] != null)
                 {
-                    System.out.println(compPicked[0]);
+                    System.out.println(compPicked[0]);                              //If he gets a card, display what he got and check for a book
                     System.out.println(compPicked[1]);
                     reportBook(computer);
                 }
                 else
                 {
-                    if (computer.checkHandEmpty())
-                    {
-                        if (myDeck.getCardCount() > 0)
-                            myDeck.Deal(7, computer);
-                        else
-                            fishing=true;
-                        
-                        reportBook(computer);
-                    }
-                    else
-                    {
-                        System.out.println("Computer goes fish!");
-                        
-                        if (myDeck.getCardCount() > 0)
-                            myDeck.Deal(1, computer);
-                        
-                        if (computer.checkHandEmpty() && myDeck.getCardCount() > 0)
-                            myDeck.Deal(7, computer);
-                        
-                        reportBook(computer);
-                        fishing=true;
-                    }
+                    if (compPicked[0] != null)  {System.out.println(compPicked[0]);} //Show what value was picked, if they had a card in hand
+                    System.out.println("Computer goes fish!");
+
+                    if (myDeck.getCardCount() > 0)
+                        myDeck.Deal(1, computer);                                   //Give them a card and check for a book
+                    reportBook(computer);
+                    
+                    if (computer.checkHandEmpty() && myDeck.getCardCount() > 0)
+                        myDeck.Deal(7, computer);
+
+                    reportBook(computer);
+                    fishing=true;
+
                 }
+
             }
             
-            if (player.checkHandEmpty() && computer.checkHandEmpty() && myDeck.getCardCount() == 0)
-            {
-                System.out.println("GAME OVER!!");
-                System.out.println("Player has "+player.getBooks()+" Books || Computer has "+computer.getBooks()+" Books!");
-                
-                if (player.getBooks() > computer.getBooks())
-                {
-                    System.out.println("Player wins!");
-                    win = true;
-                }
-                else
-                {
-                    System.out.println("Computer wins!");
-                    win = false;
-                }
-                
-                game = false;
+            if (outOfCards(player,computer,myDeck))                                 //If everyones out of cards break out of all the loops
+            {                                                                       //and display the winner. return the winner of our play
+                game = false;                                                       //method to keep track of score in the main
+                fishing = null;
+                win = checkGameOver(player,computer,myDeck);
+                break;
             }
-        }
+        } 
         return win;
     }
-    
 }
+

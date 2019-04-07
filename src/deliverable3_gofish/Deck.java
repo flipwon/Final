@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * GoFish baby!
  */
 package deliverable3_gofish;
 
@@ -10,7 +8,7 @@ import java.util.Collections;
 
 /**
  * Implementation of a Deck
- * @author flipp
+ * @author Everyone <3
  */
 public class Deck {
     
@@ -66,8 +64,9 @@ public class Deck {
      * @param numCards      Number of cards to deal
      * @param p             Player to deal cards to
      */
-    public void Deal(int numCards, Player p)
+    public Boolean Deal(int numCards, Player p)
     {
+        Boolean isEmpty = false;
         if (!cards.isEmpty())
         {
             for (int i = 0; i < numCards; i++)
@@ -83,8 +82,9 @@ public class Deck {
                 }
             }
         }else{
-            System.out.println("Out of cards, check for win???????????");   //Debug
+            isEmpty=true;   //Debug
         }  
+        return isEmpty;
     }
    
     /**

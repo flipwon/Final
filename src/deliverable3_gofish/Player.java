@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * GoFish baby!
  */
 package deliverable3_gofish;
 
@@ -11,7 +9,7 @@ import java.util.Comparator;
 
 /**
  * Implementation of a Player
- * @author flipp
+ * @author Everyone <3
  */
 public abstract class Player{
     

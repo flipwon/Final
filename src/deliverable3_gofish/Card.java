@@ -1,13 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * GoFish baby!
  */
 package deliverable3_gofish;
 
 /**
  * Implementation of a Card
- * @author flipp
+ * @author Everyone <3
  */
 public class Card {
     

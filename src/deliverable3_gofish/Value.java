@@ -1,13 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * GoFish baby!
  */
 package deliverable3_gofish;
 
 /**
- *
- * @author flipp
+ * Values of a card
+ * @author Everyone <3
  */
 public enum Value {
     Ace("ace"),
@@ -30,11 +28,20 @@ public enum Value {
         this.myString=myString;
     }
     
+    /**
+     * The string value of the Enum
+     * @return      The string value of the Enum
+     */
     public String getMyString()
     {
         return this.myString;
     }
     
+    /**
+     * The string Value of the Enum ignoring case sensitivity.
+     * @param myString 
+     * @return The value of the Enum ignoring case sensitivity.
+     */
     public static Value fromString(String myString)
     {
         for (Value i: Value.values())

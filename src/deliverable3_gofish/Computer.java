@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * GoFish baby!
  */
 package deliverable3_gofish;
 
@@ -9,7 +7,7 @@ import java.util.Random;
 
 /**
  * An implementation of the Computer class, extending the Player class
- * @author flipp
+ * @author Everyone <3
  */
 public class Computer extends GoFishPlayer{
     
@@ -22,10 +20,13 @@ public class Computer extends GoFishPlayer{
         super(name);
     }
     
+    
     /**
-     * Pick a random value of a card the computer currently has in hand from target
-     * @param target 
-     * @return true if a Card was picked
+     * Pick a random card Value of a Value currently in hand, then pick that
+     * card from target player if found. Return an array of strings to be
+     * displayed to the User.
+     * @param target
+     * @return      Array of type String
      */
     public String[] pickRandom(Player target)
     {
@@ -37,13 +38,13 @@ public class Computer extends GoFishPlayer{
         
         if(this.getHand().size() > 0)
         {
-            int randomNum = new Random().nextInt(this.getHand().size()); //Choose a random card from hand
+            int randomNum = new Random().nextInt(this.getHand().size());            //Choose a random card from hand
             
-            picked[0]="Computer calls for "+this.getHand().get(randomNum).getValue();
+            picked[0]="Computer calls for "+this.getHand().get(randomNum).getValue()+"s";
             
-            String s = pickCard(this.getHand().get(randomNum).getValue(),target);
+            String s = pickCard(this.getHand().get(randomNum).getValue(),target);   //Store the string value of the card picked to return to the game loop to display to the user.
             if (s != null)
-                picked[1]=s;//Pick a card from target player of the value of the random card picked.. confusing right?
+                picked[1]=s;                                                        
         }
         
         return picked;
