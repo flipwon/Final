@@ -24,7 +24,7 @@ public class Computer extends GoFishPlayer{
     
     /**
      * Pick a random value of a card the computer currently has in hand from target
-     * @param target
+     * @param target 
      * @return true if a Card was picked
      */
     public boolean pickRandom(Player target)

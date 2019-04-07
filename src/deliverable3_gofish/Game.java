@@ -78,7 +78,7 @@ public class Game {
         Scanner myScanner = new Scanner(System.in); 
         Deck myDeck = new Deck(52, true);
         
-        GoFishPlayer player = new GoFishPlayer("Player1");
+        GoFishPlayer player = new GoFishPlayer("Player");
         Computer computer = new Computer("Computer");
         
         Boolean game = true;
@@ -94,7 +94,20 @@ public class Game {
             //Our player game loop
             while (fishing)
             {
-                player.printHand();
+                String[] playerHand = player.printHand();
+                
+                
+                System.out.println("================================");
+                System.out.println("  Books- Player: "+player.getBooks()+" Computer: "+computer.getBooks());
+                System.out.println("================================");
+                System.out.println("       Cards in deck: "+myDeck.getCardCount());
+                System.out.println("================================");
+                System.out.println("           Your Hand");
+                System.out.println("================================");
+                for (int i=0; i<playerHand.length; i++)
+                    System.out.println(playerHand[i]);
+                System.out.println("================================");
+                
                 reportBook(player);                                                 //We have to check for a book as the game starts, because it is a possibility. We do it after we print the hand so there's feedback, I guess
                 
                 System.out.println("Choose a value to pick from (Ace/Two/Three/Jack/King etc):");
@@ -114,13 +127,22 @@ public class Game {
                         fishing = false;
                     }
                 }else{
+                    
                     System.out.println("Go Fish!");
                     fishing = false;
+                    
                     if (myDeck.getCardCount() > 0)
                     {
                         myDeck.Deal(1, player);
                         System.out.println("You picked up a "+player.getHand().get(0).toString());
+                        System.out.println("There are "+myDeck.getCardCount()+" cards left in the deck.");
+                        if (player.getHand().get(0).getValue() == Value.fromString(choice))         //If the value of the card we picked up is equal to the one we chose, fish our wish!
+                        {
+                            fishing = true;
+                            System.out.println("You fished your wish! Go again!");
+                        } 
                     }
+                    
                     reportBook(player);
                     if (player.checkHandEmpty() && myDeck.getCardCount() > 0)
                         myDeck.Deal(7, player);;
@@ -129,7 +151,7 @@ public class Game {
             }
             
             
-            //When the player isnt fishing, the computer is
+            //When the player isn't fishing, the computer is
             while (!fishing)
             {
                 System.out.println("Computer has "+computer.getHand().size()+" cards.");

@@ -104,34 +104,36 @@ public abstract class Player{
     
 
     /**
-     * Print the hand of the Player in order from lowest Value to highest Value Card. This is sort of like a fancy tostring for the players hand 
-     * but the tostring should return the player. I guess I could have made a hand class.
+     * Return the hand of the player in order of value within an array
+     * @return      An array of Strings of the players hand
      */
-    public void printHand()
+    public String[] printHand()
     {
+        String[] myHand = new String[hand.size()];
+        
         /**
          * This is an inline anonymous class I learned to use on a udemy course. Basically instead of making
          * a new comparator class that overrides the comparator method we implement it within the method here since we don't need to
-         * reuse it. We can change this to a separate class for reusability but I think this is valuable for everybody
-         * to learn, so I left it like this. This is just to sort the hand before we display it.
+         * reuse it and override the compare method already there. We can change this to a separate class for reusability but I think 
+         * this is valuable for everybody to learn, so I left it like this. 
+         * 
+         * This is just to sort the hand before we display it.
          */
-        
-        Collections.sort(hand, new Comparator<Card>() {
+        Collections.sort(hand, new Comparator<Card>() 
+        {
             
             @Override
-            public int compare(Card o1, Card o2) 
+            public int compare(Card card1, Card card2) 
             {
-                return o1.getValue().compareTo(o2.getValue());
+                return card1.getValue().compareTo(card2.getValue());
             } 
         });
         
-        
-        System.out.println("--------------------------------");
-        System.out.println(this.name+"'s hand:");
         for (int i = 0;i < hand.size(); i++)
         {
-            System.out.println(hand.get(i).toString());
+            myHand[i]=hand.get(i).toString();
         }
-        System.out.println("--------------------------------");
+        
+        return myHand;
     }
 }

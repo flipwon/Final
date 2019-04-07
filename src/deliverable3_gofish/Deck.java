@@ -83,8 +83,8 @@ public class Deck {
                 }
             }
         }else{
-            System.out.println("Out of cards, check for win???????????");
-        }
+            System.out.println("Out of cards, check for win???????????");   //Debug
+        }  
     }
    
     /**
