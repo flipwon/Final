@@ -72,9 +72,9 @@ public class GoFishPlayer extends Player {
     * @param target    The target Player to chose from
     * @return          True if a Card matching that value is found
     */
-    public boolean pickCard(Value val, Player target)
+    public String pickCard(Value val, Player target)
     {
-        boolean picked=false;                                                           //Did we pick a card?
+        String picked=null;                                                           //Did we pick a card?
         int[] toRemove = new int[target.getHand().size()];                              //Create an array copy of the targets hand to store the location of any matches.
 
         for (int i=0; i<toRemove.length;i++)                                            //init the array
@@ -87,8 +87,7 @@ public class GoFishPlayer extends Player {
                 Card temp = a;                                                          //Store it in a temp card
                 toRemove[target.getHand().indexOf(a)]=target.getHand().indexOf(a);      //Store the card location in the same location in our temp array
                 addCard(temp);                                                          //Add the card to our hand
-                System.out.println(getName()+" took "+temp.toString());                 //Tell the user who took what
-                picked=true;                                                            //Return true so the player can go again
+                picked=getName()+" took "+target.getName()+"s "+temp.getValue()+"s";                              //return who took what
             }
         }
 

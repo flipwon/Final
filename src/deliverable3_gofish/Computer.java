@@ -27,18 +27,25 @@ public class Computer extends GoFishPlayer{
      * @param target 
      * @return true if a Card was picked
      */
-    public boolean pickRandom(Player target)
+    public String[] pickRandom(Player target)
     {
+        String[] picked = new String[2];
+        for (int i=0; i<2;i++)
+        {
+            picked[i]=null;
+        }
+        
         if(this.getHand().size() > 0)
         {
             int randomNum = new Random().nextInt(this.getHand().size()); //Choose a random card from hand
-            System.out.println("Computer calls for "+this.getHand().get(randomNum).getValue());
-            return pickCard(this.getHand().get(randomNum).getValue(),target); //Pick a card from target player of the value of the random card picked.. confusing right?
+            
+            picked[0]="Computer calls for "+this.getHand().get(randomNum).getValue();
+            
+            String s = pickCard(this.getHand().get(randomNum).getValue(),target);
+            if (s != null)
+                picked[1]=s;//Pick a card from target player of the value of the random card picked.. confusing right?
         }
-        else
-        {
-            return false;
-        }
-    }
-    
+        
+        return picked;
+    }   
 }

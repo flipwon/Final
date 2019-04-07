@@ -112,9 +112,10 @@ public class Game {
                 
                 System.out.println("Choose a value to pick from (Ace/Two/Three/Jack/King etc):");
                 String choice = myScanner.nextLine();
-
-                if (player.pickCard(Value.fromString(choice),computer))
+                String chosen = player.pickCard(Value.fromString(choice),computer);
+                if (chosen != null)
                 {
+                    System.out.println(chosen);
                     reportBook(player);
                     System.out.println("Go again!");
                     if (player.checkHandEmpty() && myDeck.getCardCount() > 0)
@@ -155,10 +156,15 @@ public class Game {
             while (!fishing)
             {
                 System.out.println("Computer has "+computer.getHand().size()+" cards.");
-                if (computer.pickRandom(player))
+                String[] compPicked = computer.pickRandom(player);
+                if (compPicked[1] != null)
                 {
+                    System.out.println(compPicked[0]);
+                    System.out.println(compPicked[1]);
                     reportBook(computer);
-                }else{
+                }
+                else
+                {
                     if (computer.checkHandEmpty())
                     {
                         if (myDeck.getCardCount() > 0)
