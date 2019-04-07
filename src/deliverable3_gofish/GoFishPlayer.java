@@ -87,7 +87,7 @@ public class GoFishPlayer extends Player {
                 Card temp = a;                                                          //Store it in a temp card
                 toRemove[target.getHand().indexOf(a)]=target.getHand().indexOf(a);      //Store the card location in the same location in our temp array
                 addCard(temp);                                                          //Add the card to our hand
-                picked=getName()+" took "+target.getName()+"s "+temp.getValue()+"s";                              //return who took what
+                picked=getName()+" took "+target.getName()+"'s "+temp.getValue()+"s";                              //return who took what
             }
         }
 
